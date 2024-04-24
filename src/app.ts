@@ -119,6 +119,42 @@ server.post('/novo/atracao', async (req, res) => {
     }
 });
 
+server.delete('/remover/animal', async (req, res) => {
+    const idAnimal = parseInt(req.query.idAnimal as string);
+
+    const resultado = await Ave.removerAve(idAnimal);
+
+    if(resultado) {
+        return res.status(200).json('Animal foi removido com sucesso');
+    } else {
+        return res.status(401).json('Erro ao remover animal');
+    }
+});
+
+server.delete('/remover/atracao', async (req, res) => {
+    const idAtracao = parseInt(req.query.idAtracao as string);
+
+    const resultado = await Atracao.removerAtracao(idAtracao);
+
+    if(resultado) {
+        return res.status(200).json('Atração foi removida com sucesso');
+    } else {
+        return res.status(401).json('Erro ao remover atração');
+    }
+});
+
+server.delete('/remover/habitat', async (req, res) => {
+    const idHabitat = parseInt(req.query.idHabitat as string);
+
+    const resultado = await Habitat.removerHabitat(idHabitat);
+
+    if(resultado) {
+        return res.status(200).json('Habitat foi removido com sucesso');
+    } else {
+        return res.status(401).json('Erro ao remover habitat');
+    }
+});
+
 new DatabaseModel().testeConexao().then((resbd) => {
     if(resbd) {
         server.listen(port, () => {
