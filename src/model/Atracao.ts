@@ -78,7 +78,6 @@ export class Atracao {
 
         // Construção da query para selecionar as informações de um atracao
         const querySelectAtracao = `SELECT * FROM atracao`;
-        
 
         try {
             // Faz a consulta no banco de dados e retorna o resultado para a variável queryReturn
@@ -106,7 +105,7 @@ export class Atracao {
      * Cadastra um objeto do tipo Atracao no banco de dados
      * 
      * @param atracao Objeto do tipo Atracao
-     * @returns true caso sucesso, false caso erro
+     * @returns *true* caso sucesso, *false* caso erro
      */
     static async cadastrarAtracao(atracao: Atracao): Promise<any>;
     /**
@@ -114,7 +113,7 @@ export class Atracao {
      * 
      * @param atracao Objeto do tipo Atracao
      * @param idHabitat Id do habitat ao qual a atracão pertence
-     * @returns true caso sucesso, false caso erro
+     * @returns *true* caso sucesso, *false* caso erro
      */
     static async cadastrarAtracao(atracao: Atracao, idHabitat: Habitat): Promise<any>;
 

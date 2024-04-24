@@ -102,7 +102,7 @@ export class Habitat {
      * Cadastra um objeto do tipo Habitat no banco de dados
      * 
      * @param habitat Objeto do tipo Habitat
-     * @returns true caso sucesso, false caso erro
+     * @returns *true* caso sucesso, *false* caso erro
      */
     static async cadastrarHabitat(habitat: Habitat): Promise<any> {
         // Cria uma variável do tipo booleano para guardar o status do resultado da query
@@ -175,7 +175,7 @@ export class Habitat {
      * 
      * @param idAnimal ID do animal 
      * @param idHabitat ID do habitat
-     * @returns true caso sucesso, false caso erro
+     * @returns *true* caso sucesso, *false* caso erro
      */
     static async inserirAnimalHabitat(idAnimal: number, idHabitat: number): Promise<any> {
         // Cria uma variável do tipo booleano para guardar o status do resultado da query
@@ -220,7 +220,7 @@ export class Habitat {
             await database.query(queryDeleteAnimalHabitat)
                 .then(async (result) => {
                     if (result.rowCount != 0) {
-                        const queryDeleteHabitatAtracao = `DELETE FROM atracao WHERE idhabitat=${idHabitat}`;
+                        const queryDeleteHabitatAtracao =`DELETE FROM atracao WHERE idhabitat=${idHabitat}`;
 
                         await database.query(queryDeleteHabitatAtracao)
                             .then(async (result) => {
@@ -237,6 +237,26 @@ export class Habitat {
                     }
                 })
 
+            return queryResult;
+        } catch (error) {
+            console.log(`Erro na consulta: ${error}`);
+            return queryResult;
+        }
+    }
+
+    static async atualizarHabitat(habitat: Habitat, idHabitat: number): Promise<Boolean> {
+        let queryResult = false;
+
+        try {
+            const queryUpdateHabitat = `UPDATE habitat SET
+                                            nomeHabitat='${habitat.getNomeHabitat().toUpperCase()}'
+                                        WHERE idHabitat=${idHabitat}`;
+            await database.query(queryUpdateHabitat)
+            .then ((result) => {
+                if (result.rowCount !== 0) {
+                    queryResult = true;
+                }
+            })
             return queryResult;
         } catch (error) {
             console.log(`Erro na consulta: ${error}`);

@@ -155,12 +155,50 @@ server.delete('/remover/habitat', async (req, res) => {
     }
 });
 
+server.put('/atualizar/animal', async (req, res) => {
+    // Desestruturando objeto recebido pelo front-end
+    const { nome, idade, genero, envergadura } = req.body;
+    const idAnimal = parseInt(req.query.idAnimal as string);
+
+    // Instanciando objeto Ave
+    const novaAve = new Ave(nome, idade, genero, envergadura);
+
+    // Chama o método para persistir a ave no banco de dados
+    const result = await Ave.atualizarAve(novaAve, idAnimal);
+
+    // Verifica se a query foi executada com sucesso
+    if (result) {
+        return res.status(200).json('Ave atualizada com sucesso');
+    } else {
+        return res.status(400).json('Não foi possível atualizar a ave no banco de dados');
+    }
+});
+
+server.put('/atualizar/habitat', async (req, res) => {
+    // Desestruturando objeto recebido pelo front-end
+    const { nomeHabitat } = req.body;
+    const idHabitat = parseInt(req.query.idHabitat as string);
+
+    // Instanciando objeto Habitat
+    const novoHabitat = new Habitat(nomeHabitat);
+
+    // Chama o método para persistir o habitat no banco de dados
+    const result = await Habitat.atualizarHabitat(novoHabitat, idHabitat);
+
+    // Verifica se a query foi executada com sucesso
+    if (result) {
+        return res.status(200).json('Habitat atualizado com sucesso');
+    } else {
+        return res.status(400).json('Não foi possível atualizar o habitat no banco de dados');
+    }
+});
+
 new DatabaseModel().testeConexao().then((resbd) => {
     if(resbd) {
         server.listen(port, () => {
             console.info(`Servidor executando no endereço http://localhost:${port}/`);
         })
     } else {
-        console.log(`Não foi possível conectar ao banco de dados`);
+    console.log(`Não foi possível conectar ao banco de dados`);
     }
 })
