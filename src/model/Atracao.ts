@@ -77,7 +77,6 @@ export class Atracao {
 
     static async removerAtracao(idAtracao: number): Promise<Boolean> {
         let queryResult = true;
-
         try {
             const queryDeleteAtracao = `DELETE FROM atracao WHERE idatracao=${idAtracao};`;
             
@@ -87,7 +86,6 @@ export class Atracao {
                     queryResult = true;
                 }
             })
-
             return queryResult;
         
         } catch (error) {
